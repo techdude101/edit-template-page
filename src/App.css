@@ -1,0 +1,99 @@
+body {
+  color: rgb(33, 37, 41);  
+  font-size: 16px;
+  /* font-family: Avenir, Arial, Helvetica, sans-serif; */
+  font-family: 'Avenir LT Std', sans-serif;
+  font-weight: 400;
+  line-height: 1.5;
+  min-height: 100vh;
+}
+
+label {
+  padding-left: 0;
+  padding-right: 0;
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+  font-weight: bold;
+}
+
+textarea {
+  height: 100%;
+  border-radius: 4px;
+  font-size: 16px;
+  font-family: 'Avenir LT Std', sans-serif;
+  border: 1px solid rgb(102, 102, 102);
+  white-space: pre-line;
+}
+
+button {
+  border: 0;
+  padding: 0.3rem 0.8rem;
+  color: white;
+  border-radius: 4px;
+  font-size: 16px;
+  line-height: 1.5;
+}
+
+button:not(:disabled) {
+  cursor: pointer;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin-left: auto;
+  margin-right: auto;
+  width: 35%;
+  height: 100%;
+  text-align: center;
+  min-height: 100vh;
+}
+
+.form-container {
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+  height: 85vh;
+}
+
+.button-container {
+  text-align: right;
+  float: right;
+}
+
+.p-1 {
+  padding: 1rem;
+}
+
+.pl-1 {
+  padding-left: 1rem;
+}
+
+.pr-1 {
+  padding-right: 1rem;
+}
+
+.pad-top-bottom-1 {
+  padding: 1rem 0;
+}
+
+.mr-1 {
+  margin-right: 1rem;
+}
+
+.color-primary {
+  background-color: rgb(0, 167, 250);
+}
+
+.color-secondary {
+  background-color: rgb(102, 102, 102);
+}
+
+.min-width-10 {
+  min-width: 10ch;
+}
