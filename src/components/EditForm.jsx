@@ -1,15 +1,18 @@
 import React, { Component } from 'react';
 
 import { getTemplateFromLocalStorage, saveTemplateToLocalStorage } from '../utils/storage';
+import { saveSuccessMessage, saveErrorMessage, saveNoChangesMessage } from '../constants/messages';
 
 class EditForm extends Component {
   constructor(props) {
     super(props);
+    this.handleBack = this.handleBack.bind(this);
     this.handleCancel = this.handleCancel.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.handleSave = this.handleSave.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.state = {
+      saveMessage: null,
       template: `*Description:*
 <description>
     
@@ -36,40 +39,51 @@ class EditForm extends Component {
     if (template === null && this.state && this.state.template) {
       this.saveTemplate(this.state.template);
     } else if (template) {
-      this.setState({ template })
+      this.setState({ template });
     }
   }
 
-  saveTemplate(template) {
-    const saveSuccessful = saveTemplateToLocalStorage(template);
+  saveTemplate() {
+    const template = getTemplateFromLocalStorage();
+    this.setState({ saveMessage: null });
+    if (template === this.state.template) {
+      this.setState({ saveMessage: saveNoChangesMessage });
+      return;
+    }
+
+    const saveSuccessful = saveTemplateToLocalStorage(this.state.template);
+
     if (!saveSuccessful) {
-      console.error("Error saving template to local storage");
+      this.setState({ saveMessage: saveErrorMessage });
     } else {
-      console.log("Save template to local storage successful");
+      this.setState({ saveMessage: saveSuccessMessage });
     }
   }
 
   handleSave(e) {
     e.preventDefault();
-    console.log("Save");
-    this.saveTemplate(this.state.template);
+    this.saveTemplate();
+  }
+  
+  handleBack(e) {
+    e.preventDefault();
+    window.location = document.referrer;
   }
 
   handleCancel(e) {
     e.preventDefault();
-    console.log("Cancel");
     this.getTemplate();
     window.location = document.referrer;
   }
 
   handleChange(e) {
     const value = e.target.value;
-    this.setState({ template: value })
+    this.setState({ template: value });
+    this.setState({ saveMessage: null });
   }
 
   handleSubmit(e) {
     e.preventDefault();
-    console.dir(e);
   }
 
   render() {
@@ -81,6 +95,14 @@ class EditForm extends Component {
         <textarea name="textarea-template" className="p-1" rows="20" onChange={this.handleChange} value={this.state.template}>
         </textarea>
         <div className="button-container pad-top-bottom-1">
+        <button
+            className="color-tertiary min-width-10 mr-1"
+            name="backButton"
+            id="backButton"
+            onClick={this.handleBack}
+          >
+            Back
+          </button>
           <button
             className="color-secondary min-width-10 mr-1"
             name="cancelButton"
@@ -98,6 +120,11 @@ class EditForm extends Component {
             Save
           </button>
         </div>
+        { this.state.saveMessage && 
+          <div className="text-center pad-top-bottom-1">
+            <p>{ this.state.saveMessage }</p>
+          </div>
+        }
       </form>
     )
   }
