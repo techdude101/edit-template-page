@@ -67,7 +67,15 @@ class EditForm extends Component {
   
   handleBack(e) {
     e.preventDefault();
-    window.location = document.referrer;
+    const previousPage = document.referrer;
+    const whitelist = ["https://techdude101.github.io/bug-ticket-markdown-generator/", "http://localhost:5000/"];
+    
+    console.log(`Previous page ${document.referrer} in whitelist? ${whitelist.includes(document.referrer)}`);
+    if (whitelist.includes(previousPage)) {
+      window.location = document.referrer;
+    } else {
+      console.error("Nice try! :)");
+    }
   }
 
   handleCancel(e) {
